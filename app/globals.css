@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 243, 244, 246;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+.hero-card-responsive {
+  width: 45vw;
+  max-width: 45vw;
+}
+@media (min-width: 769px) {
+  .hero-card-responsive {
+    width: 240px;
+    max-width: 240px;
+  }
+} 
+
+/* Dot pattern background */
+.bg-dot-pattern {
+  background-image: radial-gradient(circle at 30px 30px, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
+  background-size: 60px 60px;
+}
+
+/* Animation utilities */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+} 
