@@ -137,10 +137,10 @@ export default function UnggulanPage() {
               <div className="flex justify-center items-center h-64 text-gray-400">
                 Belum ada komik unggulan.
               </div>
-            ) : (
+      ) : (
               <div className="w-full overflow-x-auto pb-32 md:pb-28">
-                <div className="flex gap-8 px-4 snap-x snap-mandatory">
-                  {comics.map((comic) => (
+          <div className="flex gap-8 px-4 snap-x snap-mandatory">
+            {comics.map((comic) => (
                     <div key={comic.id} className="min-w-full max-w-lg snap-center">
                       {/* Comic Container with Overlay */}
                       <div 
@@ -151,13 +151,13 @@ export default function UnggulanPage() {
                         onClick={() => toggleExpanded(comic.id)}
                       >
                         {/* Background Image */}
-                        <Image
-                          src={comic.cover}
-                          alt={comic.title}
-                          fill
-                          sizes="100vw"
-                          className="object-cover object-center"
-                        />
+                  <Image
+                    src={comic.cover}
+                    alt={comic.title}
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-center"
+                  />
                         
                         {/* Overlay for Description */}
                         {expandedComic === comic.id && (
@@ -303,10 +303,10 @@ export default function UnggulanPage() {
                           {comic.title}
                         </h2>
                       )}
-                    </div>
-                  ))}
-                </div>
               </div>
+            ))}
+          </div>
+        </div>
             )
           )}
         </>

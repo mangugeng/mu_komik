@@ -470,6 +470,34 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Manifesto Section */}
+      <section className="py-16 bg-gradient-to-r from-purple-900/50 to-blue-900/50">
+        <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              📜 Manifesto Etika AI & Komitmen Kreatif
+            </h2>
+            <p className="text-lg text-white/80 mb-6 max-w-2xl mx-auto">
+              Kami percaya bahwa AI adalah alat bantu, bukan pengganti seniman. Platform kami memberdayakan kreator Indonesia dengan teknologi yang bertanggung jawab dan etis.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/manifesto"
+                className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-xl text-white font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                📖 Baca Manifesto Lengkap
+              </Link>
+              <Link
+                href="/unggulan"
+                className="px-8 py-3 bg-white/20 hover:bg-white/30 rounded-xl text-white font-semibold transition-all duration-300 transform hover:scale-105 border border-white/30"
+              >
+                🎨 Lihat Karya Unggulan
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Toast */}
       {showToast && (
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-black/90 text-white px-8 py-4 rounded-2xl shadow-2xl z-50 text-lg font-semibold animate-fade-in border border-white/20">
