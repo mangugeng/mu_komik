@@ -15,6 +15,7 @@ interface Comic {
   synopsis?: string;
   teaserVideo?: string;
   teaserThumbnail?: string;
+  language?: string;
 }
 
 interface VideoComic {
@@ -24,6 +25,7 @@ interface VideoComic {
   synopsis?: string;
   teaserVideo?: string;
   teaserThumbnail?: string;
+  language?: string;
 }
 
 export default function UnggulanPage() {
@@ -101,10 +103,12 @@ export default function UnggulanPage() {
         where("isPublished", "==", true)
       );
       const unggulanSnap = await getDocs(unggulanQuery);
-      const unggulanList: Comic[] = unggulanSnap.docs.map((doc) => ({ 
-        id: doc.id, 
-        ...doc.data() 
-      } as Comic));
+      const unggulanList: Comic[] = unggulanSnap.docs
+        .map((doc) => ({ 
+          id: doc.id, 
+          ...doc.data() 
+        } as Comic))
+        .filter(comic => !comic.language || comic.language === locale); // Filter by language
       setComics(unggulanList);
 
       // Fetch video comics with teaser
@@ -118,7 +122,7 @@ export default function UnggulanPage() {
           id: doc.id, 
           ...doc.data() 
         } as VideoComic))
-        .filter(comic => comic.teaserVideo); // Only show those with teaser videos
+        .filter(comic => comic.teaserVideo && (!comic.language || comic.language === locale)); // Filter by language and teaser
       setVideoComics(videoList);
       
       setLoading(false);

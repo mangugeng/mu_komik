@@ -25,6 +25,7 @@ interface Comic {
   publishedAt?: string;
   authorId?: string;
   author?: string;
+  language?: string;
 }
 
 function ComicSkeleton() {
@@ -253,11 +254,18 @@ export default function KomikPage() {
   }, [activeIndex, instanceRef])
 
   const filtered = comics.filter(c => {
+    // Filter berdasarkan bahasa yang dipilih
+    const matchLanguage = !c.language || c.language === locale;
+    
+    // Filter berdasarkan pencarian judul
     const matchTitle = c.title.toLowerCase().includes(search.toLowerCase());
-    if (!selectedGenre) return matchTitle;
-    if (Array.isArray(c.genre)) return matchTitle && c.genre.includes(selectedGenre);
-    if (typeof c.genre === 'string') return matchTitle && c.genre === selectedGenre;
-    return false;
+    
+    // Filter berdasarkan genre
+    const matchGenre = !selectedGenre || 
+      (Array.isArray(c.genre) && c.genre.includes(selectedGenre)) ||
+      (typeof c.genre === 'string' && c.genre === selectedGenre);
+    
+    return matchLanguage && matchTitle && matchGenre;
   });
 
   // Get episode info (max 5)

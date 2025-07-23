@@ -192,9 +192,13 @@ export default function Home() {
             synopsis: data.synopsis,
             chapters: Array.isArray(data.chapters) ? data.chapters : [],
             publishedAt: data.publishedAt,
+            language: data.language,
           };
         });
-        comicsList = comicsList.filter(c => typeof c.publishedAt === 'string').sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+        comicsList = comicsList
+          .filter(c => typeof c.publishedAt === 'string')
+          .filter(c => !c.language || c.language === locale) // Filter by language
+          .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
         setLatestComics(comicsList.slice(0, 3));
       } catch {
         setLatestComics([]);

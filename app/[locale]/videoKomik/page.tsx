@@ -9,6 +9,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import { useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 
 type Chapter = { id: string; title: string };
 
@@ -22,6 +23,7 @@ interface VideoKomik {
   authorId?: string;
   author?: string;
   authorAlias?: string;
+  language?: string;
 }
 
 // Tambahkan tipe baru untuk VideoKomik dengan authorProfile dan authorAlias
@@ -65,6 +67,8 @@ export default function VideoKomikPage() {
   const [heroVideoKomik, setHeroVideoKomik] = useState<VideoKomikWithProfile[]>([])
   const [activeIndex, setActiveIndex] = useState(0)
   const router = useRouter()
+  const params = useParams()
+  const locale = params?.locale as string || 'id'
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: false,
     mode: "free-snap",
@@ -145,11 +149,18 @@ export default function VideoKomikPage() {
   }, [activeIndex, instanceRef])
 
   const filtered: VideoKomikWithProfile[] = videoKomikList.filter(c => {
+    // Filter berdasarkan bahasa yang dipilih
+    const matchLanguage = !c.language || c.language === locale;
+    
+    // Filter berdasarkan pencarian judul
     const matchTitle = c.title.toLowerCase().includes(search.toLowerCase());
-    if (!selectedGenre) return matchTitle;
-    if (Array.isArray(c.genre)) return matchTitle && c.genre.includes(selectedGenre);
-    if (typeof c.genre === 'string') return matchTitle && c.genre === selectedGenre;
-    return false;
+    
+    // Filter berdasarkan genre
+    const matchGenre = !selectedGenre || 
+      (Array.isArray(c.genre) && c.genre.includes(selectedGenre)) ||
+      (typeof c.genre === 'string' && c.genre === selectedGenre);
+    
+    return matchLanguage && matchTitle && matchGenre;
   });
 
   const heroVideoKomikTyped: VideoKomikWithProfile[] = heroVideoKomik as VideoKomikWithProfile[];
