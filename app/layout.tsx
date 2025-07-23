@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import BottomBarWrapper from './components/BottomBarWrapper'
+
 import Script from 'next/script'
 import { PreferencesProvider } from './context/PreferencesContext'
+import { LanguageProvider } from './context/LanguageContext'
 import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,6 +25,10 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://mu-komik.com'),
   alternates: {
     canonical: 'https://mu-komik.com',
+    languages: {
+      'id': 'https://mu-komik.com/id',
+      'en': 'https://mu-komik.com/en',
+    },
   },
   robots: {
     index: true,
@@ -95,10 +100,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="MU Komik" />
@@ -196,16 +202,17 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`${inter.className} bg-black min-h-screen`}>
-        <PreferencesProvider>
-          <main className="w-full md:w-1/2 mx-auto px-0 py-0">
-            <div className="w-full">
-              {children}
-            </div>
-          </main>
-          <BottomBarWrapper />
-          <Toaster position="bottom-center" />
-        </PreferencesProvider>
+      <body className={`${inter.className} bg-black min-h-screen`} suppressHydrationWarning={true}>
+        <LanguageProvider>
+          <PreferencesProvider>
+            <main className="w-full md:w-1/2 mx-auto px-0 py-0">
+              <div className="w-full">
+                {children}
+              </div>
+            </main>
+            <Toaster position="bottom-center" />
+          </PreferencesProvider>
+        </LanguageProvider>
       </body>
     </html>
   )

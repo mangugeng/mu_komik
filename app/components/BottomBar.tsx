@@ -7,10 +7,37 @@ import { onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { auth } from '../../lib/firebase';
+import { useParams } from 'next/navigation';
 
 export default function BottomBar() {
   const pathname = usePathname();
+  const params = useParams();
   const [user, setUser] = useState<User | null>(null);
+  const locale = params?.locale as string || 'id';
+  
+  // Translation function
+  const t = (key: string) => {
+    const translations = {
+      id: {
+        'comics': 'Komik',
+        'videoComics': 'Video Komik',
+        'favorites': 'Unggulan',
+        'readingList': 'Bacaanku',
+        'profile': 'Profil',
+        'login': 'Masuk'
+      },
+      en: {
+        'comics': 'Comics',
+        'videoComics': 'Video Comics',
+        'favorites': 'Featured',
+        'readingList': 'My Reads',
+        'profile': 'Profile',
+        'login': 'Login'
+      }
+    };
+    
+    return (translations[locale as keyof typeof translations] as any)?.[key] || (translations.id as any)[key] || key;
+  };
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, setUser);
@@ -18,20 +45,21 @@ export default function BottomBar() {
   }, []);
 
   const isActive = (path: string) => {
-    if (path === '/komik') {
-      return pathname === path;
+    const pathWithoutLocale = path.replace(`/${locale}`, '');
+    if (pathWithoutLocale === '/komik') {
+      return pathname.includes('/komik');
     }
-    return pathname.startsWith(path);
+    return pathname.includes(pathWithoutLocale);
   };
 
   const navItems = [
-    { href: '/komik', label: 'Komik', icon: BookOpen },
-    { href: '/videoKomik', label: 'Video', icon: Video },
-    { href: '/unggulan', label: 'Unggulan', icon: Star },
-    { href: '/bacaanku', label: 'Bacaanku', icon: BookOpen },
+    { href: `/${locale}/komik`, label: t('comics'), icon: BookOpen },
+    { href: `/${locale}/videoKomik`, label: t('videoComics'), icon: Video },
+    { href: `/${locale}/unggulan`, label: t('favorites'), icon: Star },
+    { href: `/${locale}/bacaanku`, label: t('readingList'), icon: BookOpen },
     user
-      ? { href: '/profil', label: 'Profil', icon: UserIcon }
-      : { href: '/login', label: 'Login', icon: LogIn },
+      ? { href: `/${locale}/profil`, label: t('profile'), icon: UserIcon }
+      : { href: `/${locale}/login`, label: t('login'), icon: LogIn },
   ];
 
   return (
