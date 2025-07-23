@@ -97,7 +97,6 @@ export async function getLatestNews(limitCount: number = 6): Promise<NewsItem[]>
     const querySnapshot = await getDocs(q);
     
     if (querySnapshot.empty) {
-      console.log('📰 No news found in Firestore, using mock data');
       return mockNews.slice(0, limitCount);
     }
 
@@ -135,11 +134,9 @@ export async function getLatestNews(limitCount: number = 6): Promise<NewsItem[]>
       });
     });
 
-    console.log(`📰 Fetched ${news.length} news items from Firestore`);
     return news;
   } catch (error) {
     console.error('❌ Error fetching news from Firestore:', error);
-    console.log('📰 Falling back to mock data');
     return mockNews.slice(0, limitCount);
   }
 }

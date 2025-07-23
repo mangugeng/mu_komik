@@ -163,10 +163,7 @@ export default function Home() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        console.log('🔄 Fetching news from Firestore...')
         const latestNews = await getLatestNews(6)
-        console.log('✅ News fetched successfully:', latestNews.length, 'items')
-        console.log('📰 News data:', latestNews)
         setNews(latestNews)
       } catch (error) {
         console.error('❌ Error fetching news:', error)

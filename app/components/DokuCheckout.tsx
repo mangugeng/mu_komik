@@ -21,7 +21,7 @@ export default function DokuCheckout({ checkoutUrl, onSuccess, onError }: DokuCh
     script.src = 'https://sandbox.doku.com/jokul-checkout-js/v1/jokul-checkout-1.0.0.js';
     script.async = true;
     script.onload = () => {
-      console.log('DOKU Checkout JS loaded');
+      // DOKU Checkout JS loaded successfully
     };
     script.onerror = (error: unknown) => {
       console.error('Failed to load DOKU Checkout JS:', error);

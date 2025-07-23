@@ -24,16 +24,7 @@ export async function POST(req: NextRequest) {
     ? 'https://app.midtrans.com/snap/v1/transactions'
     : 'https://app.sandbox.midtrans.com/snap/v1/transactions';
 
-  // Debug log for key and headers
-  console.log({
-    NODE_ENV: process.env.NODE_ENV,
-    API_URL,
-    serverKey,
-    base64ServerKey,
-    headers: {
-      'Authorization': `Basic ${base64ServerKey}`,
-    }
-  });
+  // Debug log for key and headers - removed for production
 
   try {
     const response = await axios.post(

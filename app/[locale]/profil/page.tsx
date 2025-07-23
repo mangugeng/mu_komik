@@ -305,10 +305,16 @@ export default function ProfilPage() {
       if (response.data.token) {
         if (window.snap && typeof window.snap.pay === 'function') {
           window.snap.pay(response.data.token, {
-            onSuccess: (result: unknown) => console.log('Success', result),
-            onPending: (result: unknown) => console.log('Pending', result),
+            onSuccess: (result: unknown) => {
+              // Handle success
+            },
+            onPending: (result: unknown) => {
+              // Handle pending
+            },
             onError: (result: unknown) => console.error('Error', result),
-            onClose: () => console.log('Popup closed'),
+            onClose: () => {
+              // Handle close
+            },
           });
         } else {
           console.error('Midtrans Snap JS not loaded');
