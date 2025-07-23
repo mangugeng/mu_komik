@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
 const LanguageSwitcher: React.FC = () => {
-  const { currentLocale, setLanguage, availableLocales } = useLanguage();
+  const { setLanguage, availableLocales } = useLanguage();
   const params = useParams();
   const urlLocale = params?.locale as string || 'id';
   const [isOpen, setIsOpen] = useState(false);

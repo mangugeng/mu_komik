@@ -86,7 +86,8 @@ export default function UnggulanPage() {
       }
     };
     
-    return (translations[locale as keyof typeof translations] as any)?.[key] || (translations.id as any)[key] || key;
+    const localeTranslations = translations[locale as keyof typeof translations];
+    return localeTranslations?.[key as keyof typeof localeTranslations] || translations.id[key as keyof typeof translations.id] || key;
   };
 
   useEffect(() => {

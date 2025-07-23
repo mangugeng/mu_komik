@@ -107,7 +107,8 @@ export default function KomikPage() {
       }
     };
     
-    return (translations[locale as keyof typeof translations] as any)?.[key] || (translations.id as any)[key] || key;
+    const localeTranslations = translations[locale as keyof typeof translations];
+    return localeTranslations?.[key as keyof typeof localeTranslations] || translations.id[key as keyof typeof translations.id] || key;
   };
 
   // Genre translation function
@@ -181,7 +182,8 @@ export default function KomikPage() {
       }
     };
     
-    return (genreTranslations[locale as keyof typeof genreTranslations] as any)?.[genre] || genre;
+    const localeGenreTranslations = genreTranslations[locale as keyof typeof genreTranslations];
+    return localeGenreTranslations?.[genre as keyof typeof localeGenreTranslations] || genre;
   };
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: false,

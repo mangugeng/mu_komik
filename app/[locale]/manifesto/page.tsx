@@ -159,7 +159,8 @@ export default function ManifestoPage() {
       }
     };
     
-         return (translations[locale as keyof typeof translations] as any)?.[key] || (translations.id as any)[key] || key;
+         const localeTranslations = translations[locale as keyof typeof translations];
+         return localeTranslations?.[key as keyof typeof localeTranslations] || translations.id[key as keyof typeof translations.id] || key;
   };
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
